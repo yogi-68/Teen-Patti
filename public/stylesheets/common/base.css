@@ -1,0 +1,76 @@
+/* Base styles and animations */
+
+body {
+  padding: 20px;
+  font: 14px sans-serif, "Lucida Grande", Helvetica, Arial;
+  border: solid 4px #09527f;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.cards-closed-set .playing-card {
+  border: solid 1px #97C94D;
+}
+
+.animate-bet {
+  display: none;
+  position: absolute;
+  width: 127px;
+  z-index: 99;
+  text-align: center;
+}
+
+/* Animations */
+@-webkit-keyframes border-animate {
+  0% {
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    border-color: #ffed4e;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+}
+
+@keyframes border-animate {
+  0% {
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    border-color: #ffed4e;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+  }
+  100% {
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+}
+
+@-webkit-keyframes border-animate-text {
+  from {
+    color: red;
+  }
+  to {
+    color: yellow;
+  }
+}
+
+@keyframes border-animate-text {
+  from {
+    color: red;
+  }
+  to {
+    winner: yellow;
+  }
+}

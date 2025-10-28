@@ -1,0 +1,57 @@
+/* Play menu page styles */
+
+.play-menu-container .logo {
+  margin: auto;
+}
+
+.play-menu-container .play-menu-panel .play-menu-header .icon-user {
+  width: 25px;
+  height: 19px;
+  margin-right: 4px;
+}
+
+.play-menu-container .play-menu-panel .player-menu-info .icon-chips {
+  display: block;
+  float: left;
+}
+
+.play-menu-container .play-menu-panel .player-menu-info .chips {
+  float: left;
+  margin: 4px 6px;
+}
+
+.play-menu-container .play-menu {
+  text-align: center;
+}
+
+.play-menu-container .play-menu .menu {
+  width: 120px;
+  height: 100px;
+  margin: 20px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.play-menu-container .play-menu .menu .icon {
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin: auto;
+}
+
+.play-menu-container .play-menu .menu .icon.tournament {
+  background-position: -160px -296px;
+}
+
+.play-menu-container .play-menu .menu .icon.pub-table {
+  background-position: -260px -297px;
+}
+
+.play-menu-container .play-menu .menu .icon.pvt-table {
+  background-position: -106px -297px;
+}
+
+.play-menu-container .play-menu .menu .text {
+  margin: -4px 0px;
+  display: block;
+}

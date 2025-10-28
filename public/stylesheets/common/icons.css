@@ -1,0 +1,63 @@
+/* Icon sprites and logo styles */
+
+.icon {
+  background: url('/images/grid-icons.png');
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.icon .default {
+  background-position: -225px -298px;
+}
+
+.icon-md {
+  display: block;
+  width: 51px;
+  height: 51px;
+}
+
+.icon-deal {
+  background-position: -563px -456px;
+  width: 27px;
+  height: 27px;
+}
+
+.icon.users {
+  background-position: -397px -9px;
+}
+
+.icon-user {
+  background-position: -325px -517px;
+}
+
+.icon-user.white {
+  background-position: -330px -542px;
+}
+
+.icon-chips {
+  background-position: -435px -460px;
+}
+
+.logo {
+  width: 167px;
+  height: 95px; 
+  display: block;
+  background: url('/images/grid-icons.png');
+}
+
+.logo.logo-default {
+  background-position: -21px -558px;
+}
+
+.dealer {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+}
+
+.dealer .icon.icon-large.dealer {
+  display: block;
+  height: 100px;
+  background-position: -420px -149px;
+}

@@ -1,0 +1,68 @@
+/* Startup page styles */
+
+.start-up .main-container {
+  margin-top: 20px;
+}
+
+.start-up .icon-user {
+  width: 34px;
+  height: 26px;
+  background-position: -325px -517px;
+}
+
+.start-up .btn.join .text-cont {
+  display: block;
+  width: 77px;
+  margin: auto;
+}
+
+.start-up .btn.join .icon-join {
+  width: 18px;
+  height: 21px;
+  background-position: -404px -541px;
+  display: block;
+  float: left;
+}
+
+.start-up .btn.join .text {
+  display: block;
+  padding: 0px 8px;
+  float: left;
+}
+
+.start-up .btn.btn-default {
+  padding: 0;
+  height: 34px;
+}
+
+.start-up .header {
+  text-align: center;
+}
+
+.start-up .header .logo {
+  margin: auto;
+}
+
+.start-up .header .title {
+  text-align: center;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+.start-up .header .title .icon {
+  width: 50px;
+  height: 50px;
+  float: left;
+}
+
+.start-up .header .title .icon.cards {
+  background-position: -329px -321px;
+}
+
+.start-up .header .title .text {
+  display: block;
+  float: left;
+  margin: 0px 10px;
+  padding: 12px 0px;
+}

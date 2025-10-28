@@ -1,0 +1,377 @@
+/* Gameplay/Table page styles */
+
+.table .logo {
+  float: right;
+}
+
+.table .table-info {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.table .table-info .caption {
+  font-weight: bold;
+  margin-left: 14px;
+}
+
+.table .table-info .value {
+  margin-left: 4px;
+}
+
+.table .table-center {
+  position: relative;
+}
+
+.table .table-center .general-notification {
+  position: absolute;
+  width: 100%;
+  top: 128px;
+  z-index: 99;
+}
+
+/* Winner styles */
+.table.play .winner-text {
+  font-size: 17px;
+  color: green;
+  position: absolute;
+  text-align: center;
+  top: -38px;
+  display: none;
+}
+
+/* Seats */
+.table.play .seat {
+  height: 130px;
+  position: relative;
+}
+
+.table.play .seat.main {
+  height: 175px;
+}
+
+/* Invite styles */
+.table.play .invite .text {
+  text-align: center;
+  display: block;
+}
+
+.table.play .invite .icon {
+  margin: auto;
+}
+
+/* Player info */
+.table.play .player-info {
+  text-align: center;
+}
+
+/* Side player styles - simplified for image-based table */
+.table.play .side-player-outer {
+  width: 120px;
+  height: 112px;
+  margin: auto;
+  padding: 10px;
+}
+
+.table.play .side-player-outer.winner {
+  border: solid 2px orange;
+  -webkit-animation: border-animate 3s infinite;
+  animation: border-animate 3s infinite;
+}
+
+.table.play .side-player-outer.winner .winner-text {
+  display: block;
+  -webkit-winner: border-animate-text 2s infinite;
+  animation: border-winner-text 2s infinite;
+  font-size: 14px;
+  top: -34px;
+  width: 88px;
+}
+
+.table.play .side-player-outer.inactive,
+.table.play .side-player-outer.packed {
+  opacity: .4;
+}
+
+.table.play .side-player-outer.turn {
+  border: solid 2px orange;
+  -webkit-animation: border-animate 3s infinite;
+  animation: border-animate 3s infinite;
+}
+
+.table.play .side-player-container {
+  border: solid 1px #e2e2e2;
+  padding: 7px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.table.play .side-player {
+  height: 100%;
+}
+
+.table.play .side-player.left .icon-deal {
+  position: absolute;
+  top: -26px;
+  left: -21px;
+}
+
+.table.play .side-player.right .icon-deal {
+  position: absolute;
+  top: -27px;
+  left: 89px;
+}
+
+.table.play .side-player .player-info .pic {
+  position: absolute;
+  width: 70px;
+  height: 50px;
+  border: solid 1px #e2e2e2;
+  top: 18px;
+  left: 12px;
+  background-position: -668px -140px;
+}
+
+.table.play .side-player .player-info .last-action {
+  top: 91px;
+  height: 20px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.table.play .side-player .player-info .name {
+  position: absolute;
+  top: 0;
+  height: 23px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.table.play .side-player .player-info .last-bet {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.table.play .side-player.left .cards {
+  left: -85px;
+}
+
+.table.play .side-player.right .cards {
+  left: 91px;
+}
+
+.table.play .side-player .cards {
+  width: 147px;
+  height: 60px;
+  bottom: 26px;
+}
+
+.table.play .side-player .cards .cards-set {
+  height: 70px;
+}
+
+.table.play .side-player .cards .see-cards {
+  display: none;
+}
+
+.table.play .side-player .playing-card {
+  width: 50px;
+  height: 70px;
+}
+
+.table.play .side-player .playing-card .card {
+  zoom: 0.69;
+}
+
+/* Side show actions */
+.table.play .side-show-actions {
+  margin-top: 10px;
+  height: 44px;
+  text-align: center;
+  margin: auto;
+}
+
+.table.play .side-show-actions button {
+  margin: 4px;
+}
+
+.table.play .side-show-actions .side-show-message {
+  display: inline-block;
+  margin: 4px;
+}
+
+/* Player actions */
+.table.play .actions {
+  margin-top: 10px;
+  height: 44px;
+  text-align: center;
+  margin: auto;
+}
+
+.table.play .actions button {
+  margin: 4px;
+}
+
+.table.play .actions .bet-value {
+  width: 100px;
+  display: inline-block;
+  margin: 4px;
+}
+
+/* Cards section */
+.table.play .cards {
+  position: absolute;
+  right: -58px;
+  bottom: 26px;
+  width: 147px;
+  height: 109px;
+}
+
+.table.play .cards .cards-set {
+  position: relative;
+  width: 100%;
+  height: 109px;
+  z-index: 10;
+}
+
+.table.play .cards .cards-set .see-cards {
+  z-index: 11;
+  bottom: 20px;
+  left: 53px;
+  position: absolute;
+}
+
+/* Current player styles - simplified */
+.table.play .current-player-outer {
+  width: 296px;
+  height: 136px;
+  margin: auto;
+}
+
+.table.play .current-player-outer .icon-deal {
+  top: -22px;
+  position: absolute;
+  left: -20px;
+}
+
+.table.play .current-player-outer.winner {
+  border: solid 2px orange;
+  -webkit-animation: border-animate 3s infinite;
+  animation: border-animate 3s infinite;
+}
+
+.table.play .current-player-outer.winner .winner-text {
+  display: block;
+  -webkit-animation: winner-animate-text 2s infinite;
+  animation: winner-animate-text 2s infinite;
+  width: 251px;
+}
+
+.table.play .current-player-outer.inactive,
+.table.play .current-player-outer.packed {
+  opacity: .4;
+}
+
+.table.play .current-player-outer.turn {
+  border: solid 2px orange;
+  -webkit-animation: border-animate 3s infinite;
+  animation: border-animate 3s infinite;
+}
+
+.table.play .current-player-outer .current-player {
+  position: relative;
+  border: solid 1px #e2e2e2;
+  padding: 10px;
+  height: 116px;
+  margin: 10px;
+}
+
+.table.play .current-player-outer .current-player.winner .winner-text {
+  display: block;
+}
+
+.table.play .current-player-outer .current-player .info {
+  height: 50px;
+}
+
+.table.play .current-player-outer .current-player .info .last-action {
+  height: 20px;
+}
+
+.table.play .current-player-outer .current-player .info .last-action,
+.table.play .current-player-outer .current-player .info .name {
+  display: block;
+  margin-left: 5px;
+}
+
+.table.play .current-player-outer .current-player .info .icon-chips {
+  float: left;
+}
+
+.table.play .current-player-outer .current-player .info .chips {
+  float: left;
+  display: block;
+  margin: 3px;
+}
+
+.table.play .current-player-outer .current-player .pic {
+  height: 94px;
+  width: 100px;
+  border: solid 1px #e2e2e2;
+  display: block;
+  float: left;
+  background-position: -477px 1px;
+}
+
+.table.play .current-player-outer .current-player .text-info {
+  margin-left: 5px;
+  padding-top: 30px;
+  width: 140px;
+  float: left;
+}
+
+/* Table bet area - positioned in center over the table image */
+.table.play .table-bet {
+  top: 62px;
+  padding: 10px;
+  height: 92px;
+  margin: auto;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 145px;
+}
+
+.table.play .table-bet .bet-info {
+  display: none;
+}
+
+/* Table notifications */
+.table.play .table-notifications {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 15px;
+}
+
+.table.play .table-notifications-info .text-message {
+  text-align: center;
+}
+
+.table.play .table-notifications-info .notification {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: none;
+}
+
+/* Table dealer - simplified for image background */
+.table.play .table-dealer {
+  padding: 10px;
+  height: 97px;
+  margin: auto;
+  text-align: center;
+}
