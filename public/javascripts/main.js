@@ -317,6 +317,14 @@ angular.module('teenPatti.directives').directive('mainPlayer', ['$filter',
                             console.log('Auto-folding player - insufficient chips');
                             scope.pack();
                         }
+                        
+                        // Send current bet amount to server for timer tracking
+                        console.log('📤 Sending updateCurrentBet - Player:', scope.player.id, 'Bet: ₹' + scope.possibleBet, 'Blind:', scope.player.cardSet.closed);
+                        socket.emit('updateCurrentBet', {
+                            playerId: scope.player.id,
+                            currentBet: scope.possibleBet,
+                            isBlind: scope.player.cardSet.closed
+                        });
                     }
                 });
                 scope.$watch('player.cardSet.closed', function(newVal) {
@@ -334,6 +342,17 @@ angular.module('teenPatti.directives').directive('mainPlayer', ['$filter',
                             break;
                     }
                     updateButtons();
+                    
+                    // Update server with new bet amount
+                    console.log('📤 Player clicked', type, '- New bet: ₹' + scope.possibleBet);
+                    if (scope.player && scope.player.turn) {
+                        console.log('📤 Sending updateCurrentBet - Player:', scope.player.id, 'Bet: ₹' + scope.possibleBet, 'Blind:', scope.player.cardSet.closed);
+                        socket.emit('updateCurrentBet', {
+                            playerId: scope.player.id,
+                            currentBet: scope.possibleBet,
+                            isBlind: scope.player.cardSet.closed
+                        });
+                    }
                 }
 
                 function updatePossibleBet() {
