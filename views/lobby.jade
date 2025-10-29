@@ -1,0 +1,113 @@
+extends layout
+
+block scripts
+  link(rel='stylesheet', href='/stylesheets/lobby.css')
+  script(src='javascripts/vendor/jquery-1.10.2.js')
+  script(src='javascripts/vendor/bootstrap.js')
+  script(src='javascripts/vendor/angular-1.2.0.js')
+  script(src='javascripts/vendor/ui-bootstrap-0.12.0.min.js')
+  script(src='/socket.io/socket.io.js')
+  script(src='javascripts/lobby.js')
+
+block content
+  .container-fluid(ng-app="TeenPattiLobby" ng-controller="LobbyController")
+    .row
+      .col-md-12
+        .text-center
+          span.logo.logo-default
+        h2.text-center Game Lobby
+        .text-right
+          a.btn.btn-default(href='/gameMenu')
+            i.glyphicon.glyphicon-arrow-left
+            |  Back to Menu
+        hr
+    
+    .row
+      .col-md-8.col-md-offset-2
+        .panel.panel-primary
+          .panel-heading
+            h3.panel-title
+              i.glyphicon.glyphicon-list
+              |  Available Rooms
+              button.btn.btn-success.btn-sm.pull-right(ng-click="createRoom()")
+                i.glyphicon.glyphicon-plus
+                |  Create Room
+          
+          .panel-body
+            .alert.alert-info(ng-show="rooms.length === 0")
+              i.glyphicon.glyphicon-info-sign
+              |  No rooms available. Create one to start playing!
+            
+            table.table.table-striped.table-hover(ng-show="rooms.length > 0")
+              thead
+                tr
+                  th Room Name
+                  th Boot Amount
+                  th Players
+                  th Status
+                  th Action
+              tbody
+                tr(ng-repeat="room in rooms")
+                  td
+                    i.glyphicon.glyphicon-home
+                    |  {{room.name}}
+                  td
+                    i.glyphicon.glyphicon-piggy-bank
+                    |  ₹{{room.boot}}
+                  td
+                    i.glyphicon.glyphicon-user
+                    |  {{room.playerCount}}/{{room.maxPlayers}}
+                  td
+                    span.label.label-success(ng-show="room.status === 'waiting'") Waiting
+                    span.label.label-warning(ng-show="room.status === 'playing'") In Game
+                    span.label.label-danger(ng-show="room.status === 'full'") Full
+                  td
+                    button.btn.btn-primary.btn-sm(ng-click="joinRoom(room.id)" ng-disabled="room.status === 'full' || room.status === 'playing'")
+                      i.glyphicon.glyphicon-log-in
+                      |  Join
+                    button.btn.btn-info.btn-sm(ng-click="spectateRoom(room.id)" style="margin-left: 5px;" ng-show="room.status === 'playing'")
+                      i.glyphicon.glyphicon-eye-open
+                      |  Watch
+    
+    .row(style="margin-top: 20px;")
+      .col-md-4.col-md-offset-4
+        .panel.panel-info
+          .panel-heading
+            h4.panel-title Your Balance
+          .panel-body.text-center
+            h3
+              i.glyphicon.glyphicon-piggy-bank
+              |  ₹{{playerInfo.chips || 0}}
+    
+    // Create Room Modal
+    #createRoomModal.modal.fade(tabindex="-1" role="dialog")
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type="button" data-dismiss="modal") &times;
+            h4.modal-title Create New Room
+          .modal-body
+            form
+              .form-group
+                label(for="roomName") Room Name
+                input#roomName.form-control(type="text" ng-model="newRoom.name" placeholder="Enter room name")
+              .form-group
+                label(for="bootAmount") Boot Amount (₹)
+                select#bootAmount.form-control(ng-model="newRoom.boot")
+                  option(value="1") ₹1
+                  option(value="2") ₹2
+                  option(value="5") ₹5
+                  option(value="10") ₹10
+                  option(value="20") ₹20
+                  option(value="50") ₹50
+                  option(value="100") ₹100
+              .form-group
+                label(for="maxPlayers") Max Players
+                select#maxPlayers.form-control(ng-model="newRoom.maxPlayers")
+                  option(value="2") 2 Players
+                  option(value="3") 3 Players
+                  option(value="4") 4 Players
+                  option(value="5") 5 Players
+          .modal-footer
+            button.btn.btn-default(type="button" data-dismiss="modal") Cancel
+            button.btn.btn-primary(type="button" ng-click="submitCreateRoom()") Create Room

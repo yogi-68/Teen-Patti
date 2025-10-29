@@ -11,6 +11,9 @@ div.play-menu-container
 				span.chips ${{chips | number}}
 			div.container
 				div.col-md-12.play-menu
+					button.menu.play-lobby.btn.btn-primary(ng-click='viewLobby()') 
+						span.icon.glyphicon.glyphicon-list
+						span.text View Lobby
 					button.menu.play-tour.btn.btn-info(ng-disabled='true',ng-click='playTour()') 
 						span.icon.tournament 
 						span.text Play Tournament

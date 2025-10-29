@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var user = require('./routes/user');
 var startup = require('./routes/startup');
+var lobby = require('./routes/lobby');
 var gameMenu = require('./routes/gameMenu'); 
 var gameplay = require('./routes/gameplay'); 
 
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/startup', startup);
 app.use('/user', user);
+app.use('/lobby', lobby);
 app.use('/gameMenu', gameMenu);
 app.use('/gameplay', gameplay);
 

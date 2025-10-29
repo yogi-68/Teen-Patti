@@ -164,9 +164,9 @@ angular.module('teenPatti.directives').directive('sidePlayer', ['$filter',
 
     }
 ]);
-angular.module('teenPatti.directives').directive('mainPlayer', ['$filter',
+angular.module('teenPatti.directives').directive('mainPlayer', ['$filter', '$rootScope',
 
-    function($filter) {
+    function($filter, $rootScope) {
         var BLIND_ALLOWED = 4;
         return {
             scope: {
@@ -180,6 +180,18 @@ angular.module('teenPatti.directives').directive('mainPlayer', ['$filter',
             },
             templateUrl: 'main.player.html',
             link: function(scope, element, attrs) {
+                // Get socket dynamically from $rootScope (in case it's not ready yet)
+                function getSocket() {
+                    return $rootScope.socket;
+                }
+                
+                // Log socket availability for debugging
+                console.log('🔌 mainPlayer directive initialized - Socket available?', !!getSocket());
+                if (getSocket()) {
+                    console.log('🔌 Socket connected?', getSocket().connected);
+                } else {
+                    console.warn('⚠️ Socket not yet available in $rootScope');
+                }
 
                 function doAnimation(args, reverse) {
                     var animateDiv = $('<div class="animate-bet alert alert-warning">$' + $filter('number')(args.amount) + '</div>').appendTo("body")
@@ -319,12 +331,19 @@ angular.module('teenPatti.directives').directive('mainPlayer', ['$filter',
                         }
                         
                         // Send current bet amount to server for timer tracking
+                        var socket = getSocket();
                         console.log('📤 Sending updateCurrentBet - Player:', scope.player.id, 'Bet: ₹' + scope.possibleBet, 'Blind:', scope.player.cardSet.closed);
-                        socket.emit('updateCurrentBet', {
-                            playerId: scope.player.id,
-                            currentBet: scope.possibleBet,
-                            isBlind: scope.player.cardSet.closed
-                        });
+                        console.log('📤 Socket exists?', !!socket, 'Socket connected?', socket ? socket.connected : 'N/A');
+                        if (socket && socket.connected) {
+                            socket.emit('updateCurrentBet', {
+                                playerId: scope.player.id,
+                                currentBet: scope.possibleBet,
+                                isBlind: scope.player.cardSet.closed
+                            });
+                            console.log('✅ updateCurrentBet emitted successfully');
+                        } else {
+                            console.error('❌ Socket not available or not connected! Socket:', socket);
+                        }
                     }
                 });
                 scope.$watch('player.cardSet.closed', function(newVal) {
@@ -344,14 +363,19 @@ angular.module('teenPatti.directives').directive('mainPlayer', ['$filter',
                     updateButtons();
                     
                     // Update server with new bet amount
+                    var socket = getSocket();
                     console.log('📤 Player clicked', type, '- New bet: ₹' + scope.possibleBet);
-                    if (scope.player && scope.player.turn) {
+                    console.log('📤 Socket exists?', !!socket, 'Socket connected?', socket ? socket.connected : 'N/A');
+                    if (scope.player && scope.player.turn && socket && socket.connected) {
                         console.log('📤 Sending updateCurrentBet - Player:', scope.player.id, 'Bet: ₹' + scope.possibleBet, 'Blind:', scope.player.cardSet.closed);
                         socket.emit('updateCurrentBet', {
                             playerId: scope.player.id,
                             currentBet: scope.possibleBet,
                             isBlind: scope.player.cardSet.closed
                         });
+                        console.log('✅ updateCurrentBet emitted after +/- click');
+                    } else {
+                        console.error('❌ Cannot send - socket:', socket, 'player.turn:', scope.player ? scope.player.turn : 'NO PLAYER');
                     }
                 }
 
@@ -388,6 +412,51 @@ angular.module('teenPatti.directives').directive('mainPlayer', ['$filter',
                         }
                     }
                 }
+                
+                // Listen for server request for current bet amount at timer end
+                var socket = getSocket();
+                if (socket) {
+                    socket.on('requestCurrentBet', function(args) {
+                        var currentSocket = getSocket();
+                        console.log('📥 Server requesting current bet amount');
+                        console.log('📥 Current scope.possibleBet:', scope.possibleBet);
+                        console.log('📥 Player ID:', scope.player ? scope.player.id : 'NO PLAYER');
+                        console.log('📥 Requested player ID:', args.playerId);
+                        
+                        if (scope.player && scope.player.id === args.playerId && scope.player.turn && currentSocket && currentSocket.connected) {
+                            console.log('📤 ✅ Sending FINAL bet amount: ₹' + scope.possibleBet);
+                            currentSocket.emit('updateCurrentBet', {
+                                playerId: scope.player.id,
+                                currentBet: scope.possibleBet,
+                                isBlind: scope.player.cardSet.closed,
+                                isFinal: true
+                            });
+                        } else {
+                            console.log('❌ NOT sending - conditions not met');
+                        }
+                    });
+                } else {
+                    console.warn('⚠️ Socket not available yet - will retry listener setup');
+                    // Retry after a delay
+                    setTimeout(function() {
+                        var retrySocket = getSocket();
+                        if (retrySocket) {
+                            retrySocket.on('requestCurrentBet', function(args) {
+                                var currentSocket = getSocket();
+                                if (scope.player && scope.player.id === args.playerId && scope.player.turn && currentSocket && currentSocket.connected) {
+                                    console.log('📤 ✅ [RETRY] Sending FINAL bet amount: ₹' + scope.possibleBet);
+                                    currentSocket.emit('updateCurrentBet', {
+                                        playerId: scope.player.id,
+                                        currentBet: scope.possibleBet,
+                                        isBlind: scope.player.cardSet.closed,
+                                        isFinal: true
+                                    });
+                                }
+                            });
+                        }
+                    }, 1000);
+                }
+                
                 setInitialValues();
             }
         }
@@ -476,6 +545,7 @@ angular.module('teenPatti.controllers').controller('gamePlay', ['$rootScope', '$
         var socket;
         if ($rootScope.userInfo) {
             socket = io.connect(window.location.protocol + "//" + window.location.hostname + (window.location.port!=80?":"+window.location.port:"" ) );
+            $rootScope.socket = socket; // Make socket available globally
             initSocketEvents();
         }
         $scope.currentPlayer = {};
@@ -967,6 +1037,11 @@ angular.module('teenPatti.controllers').controller('gameMenu', ['$rootScope', '$
 
         $scope.playTable = function() {
             $state.go('gameplay');
+        }
+        
+        $scope.viewLobby = function() {
+            // Navigate to lobby page
+            window.location.href = '/lobby';
         }
 
     }

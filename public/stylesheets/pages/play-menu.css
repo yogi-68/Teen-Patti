@@ -51,6 +51,12 @@
   background-position: -106px -297px;
 }
 
+.play-menu-container .play-menu .menu.play-lobby .icon.glyphicon {
+  font-size: 40px;
+  line-height: 50px;
+  background: none;
+}
+
 .play-menu-container .play-menu .menu .text {
   margin: -4px 0px;
   display: block;
