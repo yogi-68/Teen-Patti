@@ -33,7 +33,7 @@ router.post('/register', function(req, res) {
                     displayName: req.body.userName,
                     userName: req.body.userName,
                     guid: utils.guid(),
-                    chips: 2500000
+                    chips: 100
                 };
                 DAL.db.collection('users').insertOne(user, function(insertErr, result) {
                     if (insertErr) {
@@ -88,6 +88,33 @@ router.post('/get', function(req, res) {
             status: 'failed'
         });
     }
+});
+
+// Reset all users' chips to 100
+router.post('/reset-chips', function(req, res) {
+    if (!DAL.db) {
+        return res.status(500).json({
+            status: 'failed',
+            error: 'Database not connected'
+        });
+    }
+    
+    DAL.db.collection('users').updateMany(
+        {}, // Update all users
+        { $set: { chips: 100 } }
+    ).then(function(result) {
+        res.json({
+            status: 'success',
+            message: 'All users chips reset to 100',
+            modifiedCount: result.modifiedCount
+        });
+    }).catch(function(err) {
+        console.error('Error resetting chips:', err);
+        res.status(500).json({
+            status: 'failed',
+            error: err.message
+        });
+    });
 });
 
 module.exports = router;

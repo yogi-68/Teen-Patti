@@ -311,6 +311,12 @@ angular.module('teenPatti.directives').directive('mainPlayer', ['$filter',
                         if (scope.blindCount >= BLIND_ALLOWED) {
                             scope.seeMyCards();
                         }
+                        // Auto-fold if player doesn't have enough chips for minimum bet
+                        var minBet = getLastBet();
+                        if (scope.player.playerInfo.chips < minBet) {
+                            console.log('Auto-folding player - insufficient chips');
+                            scope.pack();
+                        }
                     }
                 });
                 scope.$watch('player.cardSet.closed', function(newVal) {
