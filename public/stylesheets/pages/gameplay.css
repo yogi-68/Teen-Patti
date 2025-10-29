@@ -29,6 +29,62 @@
   z-index: 99;
 }
 
+/* Turn Timer */
+.turn-timer {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 8px 15px;
+  font-size: 15px;
+  font-weight: bold;
+  z-index: 1000;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  min-width: 90px;
+  text-align: center;
+  display: inline-block !important;
+}
+
+.turn-timer .glyphicon {
+  margin-right: 5px;
+}
+
+.turn-timer.alert-info {
+  background-color: #5bc0de !important;
+  border-color: #46b8da !important;
+  color: white !important;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.turn-timer.alert-danger {
+  background-color: #d9534f !important;
+  border-color: #d43f3a !important;
+  color: white !important;
+  animation: pulse-urgent 0.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes pulse-urgent {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 3px 10px rgba(217, 83, 79, 0.6);
+  }
+  50% { 
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(217, 83, 79, 0.8);
+  }
+}
+
 /* Winner styles */
 .table.play .winner-text {
   font-size: 17px;

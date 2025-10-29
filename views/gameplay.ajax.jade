@@ -40,6 +40,9 @@ script(type='text/ng-template',id='side.player.html')
 		div.side-player-container
 			div.icon.icon-deal(ng-show='player.deal')
 			div.winner-text.alert-warning Winner
+			div.turn-timer.alert(ng-show='player.turn && player.turnTimer !== null && player.turnTimer !== undefined',ng-class="{'alert-danger': player.turnTimer <= 5, 'alert-info': player.turnTimer > 5}") 
+				span.glyphicon.glyphicon-time
+				span  {{player.turnTimer}}s
 			div.invite(ng-show='!player') 
 				span.icon.icon-md.users
 				span.text Invite Friend
@@ -56,6 +59,9 @@ script(type='text/ng-template',id='main.player.html')
 		div.current-player
 			div.icon.icon-deal(ng-show='player.deal')
 			div.winner-text.alert-warning Winner
+			div.turn-timer.alert(ng-show='player.turn && player.turnTimer !== null && player.turnTimer !== undefined',ng-class="{'alert-danger': player.turnTimer <= 5, 'alert-info': player.turnTimer > 5}") 
+				span.glyphicon.glyphicon-time
+				span  Time: {{player.turnTimer}}s
 			div.info
 				div.pic.icon
 				div.text-info

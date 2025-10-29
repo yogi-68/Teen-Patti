@@ -810,6 +810,13 @@ angular.module('teenPatti.controllers').controller('gamePlay', ['$rootScope', '$
                 $scope.$emit('startNew', {
                     args: args
                 });
+                // Clear all timers
+                for (var player in args.players) {
+                    var seat = $scope.seatingInfoById[args.players[player].id];
+                    if ($scope[seat]) {
+                        $scope[seat].turnTimer = null;
+                    }
+                }
                 for (var player in args.players) {
                     $scope[$scope.seatingInfoById[args.players[player].id]].turn = false;
                     $scope[$scope.seatingInfoById[args.players[player].id]].winner = false;
@@ -849,6 +856,19 @@ angular.module('teenPatti.controllers').controller('gamePlay', ['$rootScope', '$
                 $scope.seatingInfoById[args.id] = seat;
                 $scope[seat] = args;
                 $scope.$digest();
+            });
+            
+            // Turn timer handler
+            socket.on('turnTimer', function(args) {
+                console.log('⏱️  Frontend received timer update:', args);
+                var seat = $scope.seatingInfoById[args.playerId];
+                if (seat && $scope[seat]) {
+                    $scope[seat].turnTimer = args.timeLeft;
+                    console.log('✅ Timer updated for seat:', seat, '→', args.timeLeft, 's');
+                    $scope.$digest();
+                } else {
+                    console.warn('⚠️  Could not find seat for player:', args.playerId);
+                }
             });
         }
 
